@@ -28,7 +28,13 @@ export default async function DashboardPage() {
     include: {
       medications: {
         orderBy: { time: "asc" },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          dosage: true,
+          time: true,
+          barcode: true,
+          imageType: true,
           logs: {
             where: {
               taken: true,
@@ -50,6 +56,8 @@ export default async function DashboardPage() {
     name: medication.name,
     dosage: medication.dosage,
     time: medication.time,
+    barcode: medication.barcode,
+    hasImage: Boolean(medication.imageType),
     takenToday: medication.logs.length > 0,
   }));
   const takenCount = medications.filter((medication) => medication.takenToday).length;

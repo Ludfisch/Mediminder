@@ -29,6 +29,9 @@ export type MedicationMinAggregateOutputType = {
   name: string | null
   dosage: string | null
   time: string | null
+  barcode: string | null
+  image: runtime.Bytes | null
+  imageType: string | null
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -39,6 +42,9 @@ export type MedicationMaxAggregateOutputType = {
   name: string | null
   dosage: string | null
   time: string | null
+  barcode: string | null
+  image: runtime.Bytes | null
+  imageType: string | null
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +55,9 @@ export type MedicationCountAggregateOutputType = {
   name: number
   dosage: number
   time: number
+  barcode: number
+  image: number
+  imageType: number
   userId: number
   createdAt: number
   updatedAt: number
@@ -61,6 +70,9 @@ export type MedicationMinAggregateInputType = {
   name?: true
   dosage?: true
   time?: true
+  barcode?: true
+  image?: true
+  imageType?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -71,6 +83,9 @@ export type MedicationMaxAggregateInputType = {
   name?: true
   dosage?: true
   time?: true
+  barcode?: true
+  image?: true
+  imageType?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -81,6 +96,9 @@ export type MedicationCountAggregateInputType = {
   name?: true
   dosage?: true
   time?: true
+  barcode?: true
+  image?: true
+  imageType?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -164,6 +182,9 @@ export type MedicationGroupByOutputType = {
   name: string
   dosage: string
   time: string
+  barcode: string | null
+  image: runtime.Bytes | null
+  imageType: string | null
   userId: string
   createdAt: Date
   updatedAt: Date
@@ -195,6 +216,9 @@ export type MedicationWhereInput = {
   name?: Prisma.StringFilter<"Medication"> | string
   dosage?: Prisma.StringFilter<"Medication"> | string
   time?: Prisma.StringFilter<"Medication"> | string
+  barcode?: Prisma.StringNullableFilter<"Medication"> | string | null
+  image?: Prisma.BytesNullableFilter<"Medication"> | runtime.Bytes | null
+  imageType?: Prisma.StringNullableFilter<"Medication"> | string | null
   userId?: Prisma.StringFilter<"Medication"> | string
   createdAt?: Prisma.DateTimeFilter<"Medication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Medication"> | Date | string
@@ -208,6 +232,9 @@ export type MedicationOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   dosage?: Prisma.SortOrder
   time?: Prisma.SortOrder
+  barcode?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageType?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -224,6 +251,9 @@ export type MedicationWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Medication"> | string
   dosage?: Prisma.StringFilter<"Medication"> | string
   time?: Prisma.StringFilter<"Medication"> | string
+  barcode?: Prisma.StringNullableFilter<"Medication"> | string | null
+  image?: Prisma.BytesNullableFilter<"Medication"> | runtime.Bytes | null
+  imageType?: Prisma.StringNullableFilter<"Medication"> | string | null
   userId?: Prisma.StringFilter<"Medication"> | string
   createdAt?: Prisma.DateTimeFilter<"Medication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Medication"> | Date | string
@@ -237,6 +267,9 @@ export type MedicationOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   dosage?: Prisma.SortOrder
   time?: Prisma.SortOrder
+  barcode?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageType?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -253,6 +286,9 @@ export type MedicationScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Medication"> | string
   dosage?: Prisma.StringWithAggregatesFilter<"Medication"> | string
   time?: Prisma.StringWithAggregatesFilter<"Medication"> | string
+  barcode?: Prisma.StringNullableWithAggregatesFilter<"Medication"> | string | null
+  image?: Prisma.BytesNullableWithAggregatesFilter<"Medication"> | runtime.Bytes | null
+  imageType?: Prisma.StringNullableWithAggregatesFilter<"Medication"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Medication"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Medication"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Medication"> | Date | string
@@ -263,6 +299,9 @@ export type MedicationCreateInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMedicationsInput
@@ -275,6 +314,9 @@ export type MedicationUncheckedCreateInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -287,6 +329,9 @@ export type MedicationUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMedicationsNestedInput
@@ -299,6 +344,9 @@ export type MedicationUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -311,6 +359,9 @@ export type MedicationCreateManyInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -321,6 +372,9 @@ export type MedicationUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -330,6 +384,9 @@ export type MedicationUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,6 +407,9 @@ export type MedicationCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   dosage?: Prisma.SortOrder
   time?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  imageType?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -360,6 +420,9 @@ export type MedicationMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   dosage?: Prisma.SortOrder
   time?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  imageType?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -370,6 +433,9 @@ export type MedicationMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   dosage?: Prisma.SortOrder
   time?: Prisma.SortOrder
+  barcode?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  imageType?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -422,6 +488,14 @@ export type MedicationUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.MedicationScalarWhereInput | Prisma.MedicationScalarWhereInput[]
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type NullableBytesFieldUpdateOperationsInput = {
+  set?: runtime.Bytes | null
+}
+
 export type MedicationCreateNestedOneWithoutLogsInput = {
   create?: Prisma.XOR<Prisma.MedicationCreateWithoutLogsInput, Prisma.MedicationUncheckedCreateWithoutLogsInput>
   connectOrCreate?: Prisma.MedicationCreateOrConnectWithoutLogsInput
@@ -455,6 +529,9 @@ export type MedicationCreateWithoutUserInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   logs?: Prisma.MedicationLogCreateNestedManyWithoutMedicationInput
@@ -466,6 +543,9 @@ export type MedicationUncheckedCreateWithoutUserInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   logs?: Prisma.MedicationLogUncheckedCreateNestedManyWithoutMedicationInput
@@ -506,6 +586,9 @@ export type MedicationScalarWhereInput = {
   name?: Prisma.StringFilter<"Medication"> | string
   dosage?: Prisma.StringFilter<"Medication"> | string
   time?: Prisma.StringFilter<"Medication"> | string
+  barcode?: Prisma.StringNullableFilter<"Medication"> | string | null
+  image?: Prisma.BytesNullableFilter<"Medication"> | runtime.Bytes | null
+  imageType?: Prisma.StringNullableFilter<"Medication"> | string | null
   userId?: Prisma.StringFilter<"Medication"> | string
   createdAt?: Prisma.DateTimeFilter<"Medication"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Medication"> | Date | string
@@ -516,6 +599,9 @@ export type MedicationCreateWithoutLogsInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMedicationsInput
@@ -527,6 +613,9 @@ export type MedicationUncheckedCreateWithoutLogsInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -554,6 +643,9 @@ export type MedicationUpdateWithoutLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMedicationsNestedInput
@@ -565,6 +657,9 @@ export type MedicationUncheckedUpdateWithoutLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,6 +671,9 @@ export type MedicationCreateWithoutPushDeliveriesInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMedicationsInput
@@ -587,6 +685,9 @@ export type MedicationUncheckedCreateWithoutPushDeliveriesInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -614,6 +715,9 @@ export type MedicationUpdateWithoutPushDeliveriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMedicationsNestedInput
@@ -625,6 +729,9 @@ export type MedicationUncheckedUpdateWithoutPushDeliveriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -636,6 +743,9 @@ export type MedicationCreateManyUserInput = {
   name: string
   dosage: string
   time: string
+  barcode?: string | null
+  image?: runtime.Bytes | null
+  imageType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -645,6 +755,9 @@ export type MedicationUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logs?: Prisma.MedicationLogUpdateManyWithoutMedicationNestedInput
@@ -656,6 +769,9 @@ export type MedicationUncheckedUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logs?: Prisma.MedicationLogUncheckedUpdateManyWithoutMedicationNestedInput
@@ -667,6 +783,9 @@ export type MedicationUncheckedUpdateManyWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   dosage?: Prisma.StringFieldUpdateOperationsInput | string
   time?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -716,6 +835,9 @@ export type MedicationSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   name?: boolean
   dosage?: boolean
   time?: boolean
+  barcode?: boolean
+  image?: boolean
+  imageType?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -730,6 +852,9 @@ export type MedicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   dosage?: boolean
   time?: boolean
+  barcode?: boolean
+  image?: boolean
+  imageType?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -741,6 +866,9 @@ export type MedicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   dosage?: boolean
   time?: boolean
+  barcode?: boolean
+  image?: boolean
+  imageType?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -752,12 +880,15 @@ export type MedicationSelectScalar = {
   name?: boolean
   dosage?: boolean
   time?: boolean
+  barcode?: boolean
+  image?: boolean
+  imageType?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MedicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dosage" | "time" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["medication"]>
+export type MedicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dosage" | "time" | "barcode" | "image" | "imageType" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["medication"]>
 export type MedicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   logs?: boolean | Prisma.Medication$logsArgs<ExtArgs>
@@ -783,6 +914,9 @@ export type $MedicationPayload<ExtArgs extends runtime.Types.Extensions.Internal
     name: string
     dosage: string
     time: string
+    barcode: string | null
+    image: runtime.Bytes | null
+    imageType: string | null
     userId: string
     createdAt: Date
     updatedAt: Date
@@ -1216,6 +1350,9 @@ export interface MedicationFieldRefs {
   readonly name: Prisma.FieldRef<"Medication", 'String'>
   readonly dosage: Prisma.FieldRef<"Medication", 'String'>
   readonly time: Prisma.FieldRef<"Medication", 'String'>
+  readonly barcode: Prisma.FieldRef<"Medication", 'String'>
+  readonly image: Prisma.FieldRef<"Medication", 'Bytes'>
+  readonly imageType: Prisma.FieldRef<"Medication", 'String'>
   readonly userId: Prisma.FieldRef<"Medication", 'String'>
   readonly createdAt: Prisma.FieldRef<"Medication", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Medication", 'DateTime'>

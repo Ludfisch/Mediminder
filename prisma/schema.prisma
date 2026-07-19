@@ -28,6 +28,9 @@ model Medication {
   name      String
   dosage    String
   time      String
+  barcode   String?
+  image     Bytes?
+  imageType String?
 
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -37,6 +40,8 @@ model Medication {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 

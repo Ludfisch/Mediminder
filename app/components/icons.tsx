@@ -78,6 +78,31 @@ export function TrashIcon(props: IconProps) {
   );
 }
 
+export function BarcodeIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 5v14m3-14v14m3-14v14m4-14v14m2-14v14m4-14v14" />
+    </IconBase>
+  );
+}
+
+export function CameraIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 8.5h3l1.5-2h7l1.5 2h3v10H4Z" />
+      <circle cx="12" cy="13.5" r="3" />
+    </IconBase>
+  );
+}
+
+export function CloseIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m6 6 12 12M18 6 6 18" />
+    </IconBase>
+  );
+}
+
 export function ArrowRightIcon(props: IconProps) {
   return (
     <IconBase {...props}>

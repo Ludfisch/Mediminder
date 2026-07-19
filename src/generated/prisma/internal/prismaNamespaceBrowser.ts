@@ -91,6 +91,9 @@ export const MedicationScalarFieldEnum = {
   name: 'name',
   dosage: 'dosage',
   time: 'time',
+  barcode: 'barcode',
+  image: 'image',
+  imageType: 'imageType',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

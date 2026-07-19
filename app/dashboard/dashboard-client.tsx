@@ -1,14 +1,18 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
+  BarcodeIcon,
   CheckIcon,
   ClockIcon,
   PillIcon,
   PlusIcon,
   TrashIcon,
 } from "../components/icons";
+import { BarcodeScanner } from "./barcode-scanner";
+import { PackImagePicker } from "./pack-image-picker";
 import { PushReminders } from "./push-reminders";
 
 export type MedicationItem = {
@@ -16,6 +20,8 @@ export type MedicationItem = {
   name: string;
   dosage: string;
   time: string;
+  barcode: string | null;
+  hasImage: boolean;
   takenToday: boolean;
 };
 
@@ -29,6 +35,8 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
   const [name, setName] = useState("");
   const [dosage, setDosage] = useState("");
   const [time, setTime] = useState("08:00");
+  const [barcode, setBarcode] = useState("");
+  const [packImage, setPackImage] = useState("");
   const [message, setMessage] = useState("");
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -42,7 +50,7 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
       const response = await fetch("/api/medications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, dosage, time }),
+        body: JSON.stringify({ name, dosage, time, barcode, packImage }),
       });
       const data = await response.json();
 
@@ -54,6 +62,8 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
       setName("");
       setDosage("");
       setTime("08:00");
+      setBarcode("");
+      setPackImage("");
       setMessage("Medikament wurde hinzugefügt.");
       router.refresh();
     } catch {
@@ -165,18 +175,26 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
                     : "border-slate-200 bg-white hover:border-teal-200"
                 }`}
               >
-                <div
-                  className={`grid size-12 shrink-0 place-items-center rounded-2xl ${
-                    medication.takenToday
-                      ? "bg-teal-700 text-white"
-                      : "bg-slate-100 text-slate-600"
-                  }`}
-                >
-                  {medication.takenToday ? (
-                    <CheckIcon className="size-6" />
+                <div className="relative size-12 shrink-0">
+                  {medication.hasImage ? (
+                    <Image
+                      src={`/api/medications/${medication.id}/image`}
+                      alt={`Eigene Aufnahme der Packung von ${medication.name}`}
+                      width={48}
+                      height={48}
+                      unoptimized
+                      className="size-12 rounded-2xl border border-slate-200 bg-white object-contain"
+                    />
                   ) : (
-                    <PillIcon className="size-6" />
+                    <span className="grid size-12 place-items-center rounded-2xl bg-slate-100 text-slate-600">
+                      <PillIcon className="size-6" />
+                    </span>
                   )}
+                  {medication.takenToday ? (
+                    <span className="absolute -bottom-1 -right-1 grid size-5 place-items-center rounded-full border-2 border-white bg-teal-700 text-white">
+                      <CheckIcon className="size-3" />
+                    </span>
+                  ) : null}
                 </div>
 
                 <div className="min-w-0 flex-1">
@@ -184,6 +202,12 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
                     {medication.name}
                   </h3>
                   <p className="mt-0.5 text-sm text-slate-500">{medication.dosage}</p>
+                  {medication.barcode ? (
+                    <p className="mt-1 flex break-all font-mono text-xs text-slate-400">
+                      <BarcodeIcon className="mr-1.5 size-3.5 shrink-0" />
+                      {medication.barcode}
+                    </p>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -233,6 +257,30 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
         </p>
 
         <form onSubmit={addMedication} className="mt-7 space-y-4">
+          <BarcodeScanner
+            onDetected={(value) => {
+              setBarcode(value);
+              setMessage("Barcode erkannt. Bitte prüfe jetzt Name und Dosierung.");
+            }}
+          />
+
+          <div>
+            <label htmlFor="barcode" className="text-sm font-semibold text-slate-200">
+              PZN / Barcode (optional)
+            </label>
+            <input
+              id="barcode"
+              type="text"
+              maxLength={160}
+              value={barcode}
+              onChange={(event) => setBarcode(event.target.value)}
+              placeholder="Scannen oder manuell eintragen"
+              className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 font-mono text-white outline-none placeholder:font-sans placeholder:text-slate-500 focus:border-teal-400 focus:ring-4 focus:ring-teal-400/10"
+            />
+            <p className="mt-2 text-xs leading-5 text-slate-500">
+              Der Code identifiziert die Packung, aber nicht deine persönliche Einnahmeanweisung.
+            </p>
+          </div>
           <div>
             <label htmlFor="medication-name" className="text-sm font-semibold text-slate-200">
               Medikament
@@ -241,6 +289,7 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
               id="medication-name"
               type="text"
               required
+              maxLength={100}
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="z. B. Vitamin D"
@@ -256,12 +305,21 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
               id="dosage"
               type="text"
               required
+              maxLength={100}
               value={dosage}
               onChange={(event) => setDosage(event.target.value)}
               placeholder="z. B. 1 Tablette"
               className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-teal-400 focus:ring-4 focus:ring-teal-400/10"
             />
           </div>
+
+          <PackImagePicker
+            value={packImage}
+            onChange={setPackImage}
+            onError={(error) => {
+              if (error) setMessage(error);
+            }}
+          />
 
           <div>
             <label htmlFor="time" className="text-sm font-semibold text-slate-200">

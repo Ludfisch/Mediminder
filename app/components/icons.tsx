@@ -78,6 +78,15 @@ export function TrashIcon(props: IconProps) {
   );
 }
 
+export function EditIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="m4 20 4.2-1 10.6-10.6a2.1 2.1 0 0 0-3-3L5.2 16 4 20Z" />
+      <path d="m14.5 6.7 2.8 2.8" />
+    </IconBase>
+  );
+}
+
 export function BarcodeIcon(props: IconProps) {
   return (
     <IconBase {...props}>

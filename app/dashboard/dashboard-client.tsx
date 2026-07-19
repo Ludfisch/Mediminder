@@ -7,11 +7,13 @@ import {
   BarcodeIcon,
   CheckIcon,
   ClockIcon,
+  EditIcon,
   PillIcon,
   PlusIcon,
   TrashIcon,
 } from "../components/icons";
 import { BarcodeScanner } from "./barcode-scanner";
+import { MedicationEditDialog } from "./medication-edit-dialog";
 import { PackImagePicker } from "./pack-image-picker";
 import { PushReminders } from "./push-reminders";
 
@@ -39,6 +41,7 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
   const [packImage, setPackImage] = useState("");
   const [message, setMessage] = useState("");
   const [pendingId, setPendingId] = useState<string | null>(null);
+  const [editingMedication, setEditingMedication] = useState<MedicationItem | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
   async function addMedication(event: FormEvent<HTMLFormElement>) {
@@ -233,6 +236,16 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
 
                   <button
                     type="button"
+                    aria-label={`${medication.name} bearbeiten`}
+                    onClick={() => setEditingMedication(medication)}
+                    disabled={pendingId === medication.id}
+                    className="grid size-9 place-items-center rounded-xl text-slate-400 transition hover:bg-teal-50 hover:text-teal-700 disabled:opacity-50"
+                  >
+                    <EditIcon className="size-4" />
+                  </button>
+
+                  <button
+                    type="button"
                     aria-label={`${medication.name} löschen`}
                     onClick={() => removeMedication(medication.id, medication.name)}
                     disabled={pendingId === medication.id}
@@ -346,6 +359,17 @@ export function DashboardClient({ medications, pushConfigured }: DashboardClient
         </form>
       </aside>
       </div>
+      {editingMedication ? (
+        <MedicationEditDialog
+          medication={editingMedication}
+          onClose={() => setEditingMedication(null)}
+          onSaved={() => {
+            setEditingMedication(null);
+            setMessage("Medikament wurde aktualisiert.");
+            router.refresh();
+          }}
+        />
+      ) : null}
     </div>
   );
 }

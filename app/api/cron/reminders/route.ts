@@ -37,6 +37,7 @@ export async function GET(request: Request) {
 
   const prisma = getPrisma();
   const now = new Date();
+  const reminderOffsets = [0, 1, 2];
   const recent = new Date(now.getTime() - 36 * 60 * 60 * 1000);
   const subscriptions = await prisma.pushSubscription.findMany({
     include: {
@@ -60,26 +61,29 @@ export async function GET(request: Request) {
   let failed = 0;
 
   for (const subscription of subscriptions) {
-    let current: ReturnType<typeof localParts>;
+    let dueMinutes: ReturnType<typeof localParts>[];
     try {
-      current = localParts(now, subscription.timezone);
+      dueMinutes = reminderOffsets.map((offset) =>
+        localParts(new Date(now.getTime() - offset * 60 * 1000), subscription.timezone),
+      );
     } catch {
       failed += 1;
       continue;
     }
 
     for (const medication of subscription.user.medications) {
-      if (medication.time !== current.time) continue;
+      const dueMinute = dueMinutes.find((candidate) => medication.time === candidate.time);
+      if (!dueMinute) continue;
 
       const alreadyTaken = medication.logs.some(
-        (log) => log.takenAt && localParts(log.takenAt, subscription.timezone).date === current.date,
+        (log) => log.takenAt && localParts(log.takenAt, subscription.timezone).date === dueMinute.date,
       );
       if (alreadyTaken) {
         skipped += 1;
         continue;
       }
 
-      const scheduledKey = `${current.date}T${medication.time}`;
+      const scheduledKey = `${dueMinute.date}T${medication.time}`;
       try {
         await prisma.pushDelivery.create({
           data: {

@@ -14,6 +14,7 @@ function urlBase64ToUint8Array(value: string) {
 export function PushReminders({ configured }: { configured: boolean }) {
   const [state, setState] = useState<PushState>("loading");
   const [message, setMessage] = useState("");
+  const [isTesting, setIsTesting] = useState(false);
 
   useEffect(() => {
     if (
@@ -101,6 +102,28 @@ export function PushReminders({ configured }: { configured: boolean }) {
     }
   }
 
+  async function testPush() {
+    setMessage("");
+    setIsTesting(true);
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+      if (!subscription) throw new Error("Keine Push-Anmeldung vorhanden.");
+
+      const response = await fetch("/api/push/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ endpoint: subscription.endpoint }),
+      });
+      if (!response.ok) throw new Error("Testbenachrichtigung fehlgeschlagen.");
+      setMessage("Testbenachrichtigung wurde an dieses Gerät gesendet.");
+    } catch {
+      setMessage("Die Testbenachrichtigung konnte nicht gesendet werden.");
+    } finally {
+      setIsTesting(false);
+    }
+  }
+
   const active = state === "on";
 
   return (
@@ -121,14 +144,26 @@ export function PushReminders({ configured }: { configured: boolean }) {
         ) : null}
         {message ? <p className="mt-2 text-sm font-semibold text-teal-800" role="status">{message}</p> : null}
       </div>
-      <button
-        type="button"
-        onClick={active ? disablePush : enablePush}
-        disabled={state === "loading" || state === "unsupported"}
-        className={`shrink-0 rounded-xl px-5 py-3 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${active ? "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50" : "bg-teal-700 text-white hover:bg-teal-800"}`}
-      >
-        {state === "loading" ? "Wird geprüft …" : active ? "Ausschalten" : "Erinnerungen aktivieren"}
-      </button>
+      <div className="flex shrink-0 flex-col gap-2 sm:items-stretch">
+        {active ? (
+          <button
+            type="button"
+            onClick={testPush}
+            disabled={isTesting}
+            className="rounded-xl bg-teal-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isTesting ? "Wird gesendet …" : "Testbenachrichtigung senden"}
+          </button>
+        ) : null}
+        <button
+          type="button"
+          onClick={active ? disablePush : enablePush}
+          disabled={state === "loading" || state === "unsupported"}
+          className={`rounded-xl px-5 py-3 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50 ${active ? "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50" : "bg-teal-700 text-white hover:bg-teal-800"}`}
+        >
+          {state === "loading" ? "Wird geprüft …" : active ? "Ausschalten" : "Erinnerungen aktivieren"}
+        </button>
+      </div>
     </section>
   );
 }
